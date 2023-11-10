@@ -1,0 +1,17 @@
+.screenshot-overlay {
+    position:  fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: crosshair;
+    z-index: 2147483647; /* Maximum z-index value to ensure it's on top */
+    background-color: rgba(0,0,0,0.15); /* Slight overlay tint */
+}
+
+.selection-box {
+    position: absolute;
+    border: 2px solid #5b9dd9; /* Blue border color */
+    background-color: rgba(95, 158, 160, 0.25); /* Slight fill color */
+    z-index: 2147483647;
+}

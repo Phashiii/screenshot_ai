@@ -1,20 +1,21 @@
 
 {
-    "manifest_version":2,
+    "manifest_version": 3,
     "name":"ScreenAI",
     "version": "1.0",
-    "permissions": ["activeTab", "<all_urls>", "storage"],
+    "permissions": ["storage", "tabs", "activeTab", "scripting"],
+    "host_permissions": ["https://*/*"],
     "background": {
-        "scripts":["background.js"],
-        "persistent": false
+        "service_worker":"background.js"
     },
     "content_scripts":[
         {
-            "matches":["<all_urls>"],
+            "matches":["https://*/*"],
+            "css": ["overlay.css"],
             "js":["content.js"]
         }
     ],
-    "browser_action":{
+    "action":{
         "default_icon": {
             "16": "icons/icon16.png",
             "48": "icons/icon48.png",
@@ -22,7 +23,12 @@
         }
     },
     "web_accessible_resources":[
-        "overlay.js",
-        "styles/overlay.css"
+        {
+            "resources":[
+                "overlay.js",
+                "overlay.css"
+            ],
+            "matches":["https://*/*"]
+        }
     ]
 }

@@ -1,15 +1,17 @@
-const style = document.createElement('')
-style.rel = 'stylesheet';
-style.href = chrome.runtime.getURL('styles/overlay.css')
-(document.head || document.documentElement).appendChild(style)
 
-function createOverlay() {
-    overlay = document.createElement('div')
+const styleElement = document.createElement('style')
+styleElement.rel = 'stylesheet';
+styleElement.href = chrome.runtime.getURL('overlay.css')
+document.head || document.documentElement.appendChild(styleElement)
+
+const createOverlay = () => {
+    const overlay = document.createElement('div')
     overlay.className = 'screenShot-overlay'
     document.body.appendChild(overlay)
 
     //Attach the event listners to handle drawing the selection rectangle
     overlay.addEventListener('mousedown', startSelection)
+    console.log('Create overlay')
 }
 
 function startSelection(event){
@@ -72,3 +74,4 @@ function sendSelectionForCapture(selection) {
 }
 
 createOverlay()
+

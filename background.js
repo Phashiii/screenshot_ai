@@ -1,13 +1,19 @@
-chrome.runtime.onMessage.addListner(function(){
-    console.log('ScreenAI installed.')
-})
+async function getCurrentTab() {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    // `tab` will either be a `tabs.Tab` instance or `undefined`.
+    let [tab] = await chrome.tabs.query(queryOptions);
+    return tab;
+  }
 
+chrome.action.onClicked.addListener((tab) => {
+    chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      files: ['overlay.js']
+    }).then(() => console.log("script injected"))
+    .catch(() => console.log('Didnt work'))
+  });
 
-chrome.browserAction.onClicked.addListner(function(tab){
-    chrome.tabs.executeScript(null, {file: "overlay.js"})
-})
-
-chrome.runtime.onMessage.addListner(function(request, sender, sendResponse){
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     if(request.action === "captureSection"){
         //capture the visible tab
         chrome.tabs.captureVisibleTab(null,{format:'png'}, function(dataUrl){

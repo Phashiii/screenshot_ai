@@ -1,4 +1,4 @@
-.screenshot-overlay {
+.screenShot-overlay {
     position:  fixed;
     top: 0;
     left: 0;
@@ -6,7 +6,7 @@
     height: 100vh;
     cursor: crosshair;
     z-index: 2147483647; /* Maximum z-index value to ensure it's on top */
-    background-color: rgba(0,0,0,0.15); /* Slight overlay tint */
+    background-color: rgba(0,0,0,0.5); /* Slight overlay tint */
 }
 
 .selection-box {

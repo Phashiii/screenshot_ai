@@ -4,17 +4,15 @@ styleElement.rel = 'stylesheet';
 styleElement.href = chrome.runtime.getURL('overlay.css')
 document.head || document.documentElement.appendChild(styleElement)
 
-const createOverlay = () => {
     const overlay = document.createElement('div')
     overlay.className = 'screenShot-overlay'
     document.body.appendChild(overlay)
 
     //Attach the event listners to handle drawing the selection rectangle
     overlay.addEventListener('mousedown', startSelection)
-    console.log('Create overlay')
-}
 
-function startSelection(event){
+
+function startSelection(event) {
     //Record the start position of the mouse
     startX = event.pageX
     startY = event.pageY
@@ -29,7 +27,7 @@ function startSelection(event){
     overlay.addEventListener('mousemove', resizeSelection)
     overlay.addEventListener('mouseup', endSelection)
 
-    function resizeSelection(event){
+    function resizeSelection(event) {
         //Calculate the width and height of the selection box
         const width = Math.abs(event.pageX - startX)
         const height = Math.abs(event.pageY - startY)
@@ -39,12 +37,16 @@ function startSelection(event){
         selectionDiv.style.height = `${height}px`
         selectionDiv.style.left = `${event.pageX < startX ? event.pageX : startX}px`
         selectionDiv.style.top = `${event.pageY < startY ? event.pageY : startY}px`
+
+        console.log(width)
+        console.log(height)
+
     }
 
-    function endSelection(event){
+    function endSelection(event) {
         //Remove the event listners as the selection is complete
-        overlay.removeEventListner('musemove', resizeSelection)
-        overlay.removeEventListner('mouseup', endSelection)
+        overlay.removeEventListener('musemove', resizeSelection)
+        overlay.removeEventListener('mouseup', endSelection)
 
         //Calculation final dimensions of the selection
         const rect = selectionDiv.getBoundingClientRect()
@@ -62,7 +64,7 @@ function startSelection(event){
     }
 }
 
-function sendSelectionForCapture(selection) {
+function sendSelectionForCapture (selection) {
     //Message the background script to take a screenshot of the specified area
     chrome.runtime.sendMessage({action: "captureSection", selection: selection},
     function(response){
@@ -72,6 +74,3 @@ function sendSelectionForCapture(selection) {
         }
     })
 }
-
-createOverlay()
-
